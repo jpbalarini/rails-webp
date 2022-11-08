@@ -40,7 +40,8 @@ module Rails
         private
 
         def data_digest(data)
-          "-#{context.environment.digest_class.new.update(data).to_s}"
+          intermediate_digest = context.environment.digest_class.new.update(data).digest
+          "-#{context.environment.digest_class.new.update("1.0"+intermediate_digest).to_s}"
         end
 
         def excluded_dir?(path)
